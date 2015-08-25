@@ -1,6 +1,7 @@
 #!/bin/bash
 # /etc/init.d/minecraft
 # version 0.3.9 2012-08-13 (YYYY-MM-DD)
+# modded by Timendainum 8-24-15
 
 ### BEGIN INIT INFO
 # Provides:   minecraft
@@ -21,7 +22,7 @@ USERNAME='minecraft'
 WORLD='world'
 MCPATH='/srv/minecraft'
 BACKUPPATH='/backup/minecraft'
-MAXHEAP=3512
+MAXHEAP=3256
 MINHEAP=1024
 HISTORY=1024
 CPU_COUNT=3
