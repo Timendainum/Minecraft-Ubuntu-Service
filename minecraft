@@ -149,12 +149,18 @@ mc_update() {
         re=`awk -v linenum=4 'NR == linenum {print; exit}' "$MCPATH/versions"`
         reVersion=`echo $re | awk -F'\"' '{print $4}'`
         as_user "rm $MCPATH/versions"
+	as_user "rm $MCPATH/.minecraft/versions"
         if [ "$1" == "snapshot" ]; then
         MC_SERVER_URL=http://s3.amazonaws.com/Minecraft.Download/versions/$snapVersion/minecraft_server.$snapVersion.jar
+        MC_CLIENT_URL=http://s3.amazonaws.com/Minecraft.Download/versions/$snapVersion/$snapVersion.jar
+	VERSION_NAME=$snapVesion
         else
         MC_SERVER_URL=http://s3.amazonaws.com/Minecraft.Download/versions/$reVersion/minecraft_server.$reVersion.jar
+        MC_CLIENT_URL=http://s3.amazonaws.com/Minecraft.Download/versions/$reVersion/$reVersion.jar
+	VERSION_NAME=$reVersion
         fi
     as_user "cd $MCPATH && wget -q -O $MCPATH/minecraft_server.jar.update $MC_SERVER_URL"
+    as_user "cd $MCPATH && wget $MC_CLIENT_URL -P $MCPATH/.minecraft/versions/$VERSION_NAME/"
     if [ -f $MCPATH/minecraft_server.jar.update ]
     then
       if `diff $MCPATH/$SERVICE $MCPATH/minecraft_server.jar.update >/dev/null`
